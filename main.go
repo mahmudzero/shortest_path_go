@@ -1,29 +1,42 @@
 package main
 import "fmt"
 
+func push(arr [][]int, val []int) [][]int {
+	new_arr := make([][]int, len(arr) + 1)
+	for i := 0; i < len(arr); i++ {
+		new_arr[i] = arr[i]
+	}
+	new_arr[len(arr)] = val
+
+	return new_arr
+}
+
 func contains(arr []int, val int) bool {
-	var _contains bool = false;
-	for i, v := range arr {
-		_contains = _contains || (v == val);
+	for i := 0; i < len(arr); i++ {
+		if arr[i] == val {
+			return true
+		}
 	}
 
-	return _contains;
+	return false
 }
 
 func find_shortest(graph [][2]int, start, end int) {
-	var roots [][2]int;
+	var roots [][2]int
 
-	var roots_i int = 0
-	for i, g := range graph {
-		fmt.Println(i, g);
-		if contains(g, start) {
-			roots[roots_i] = g;
-			roots_i++;
+	for i := 0; i < len(graph); i++ {
+		g := graph[i]
+		if contains(g[:], start) {
+			// i wanna be able to use push, just for the funzies, but append is built in so
+			// for now we are gonna use that
+			roots = append(roots, g)
 		}
 	}
+
+	fmt.Println(roots)
 }
 
 func main() {
-	graph := [][2]int{ { 1, 2 }, { 2, 3 }, { 3, 1 } };
-	find_shortest(graph, 2, 3);
+	graph := [][2]int{ { 1, 2 }, { 2, 3 }, { 3, 4 } }
+	find_shortest(graph, 1, 3)
 }
