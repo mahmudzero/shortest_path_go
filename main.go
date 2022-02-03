@@ -1,6 +1,17 @@
 package main
 import "fmt"
 
+func min(arr []int) int {
+	m := 0
+	for i := 0; i < len(arr); i++ {
+		if arr[i] < m {
+			m = arr[i]
+		}
+	}
+
+	return m
+}
+
 func push(arr [][]int, val []int) [][]int {
 	new_arr := make([][]int, len(arr) + 1)
 	for i := 0; i < len(arr); i++ {
@@ -37,7 +48,7 @@ func find_shortest(graph [][2]int, start, end int) int {
 
 	if len(roots) == 0 || len(ends) == 0 { return -1 }
 
-	cnt := 0
+	cnts := make([]int, len(roots))
 
 	for i := 0; i < len(roots); i++ {
 		root := roots[i]
@@ -47,12 +58,11 @@ func find_shortest(graph [][2]int, start, end int) int {
 		new_graph[roots_idx[i]] = new_graph[len(graph) - 1]
 		new_graph = new_graph[:len(graph) - 1]
 
-		cnt += (find_shortest(new_graph, root[1], end) + 1)
+		cnts[i] += (find_shortest(new_graph, root[1], end) + 1)
 	}
 
-	if cnt == 0 { return -1 }
-
-	return cnt
+	if min(cnts) == 0 { return - 1 }
+	return min(cnts)
 }
 
 func main() {
