@@ -50,6 +50,8 @@ func find_shortest(graph [][2]int, start, end int) int {
 		cnt += (find_shortest(new_graph, root[1], end) + 1)
 	}
 
+	if cnt == 0 { return -1 }
+
 	return cnt
 }
 
